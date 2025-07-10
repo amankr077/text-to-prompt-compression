@@ -1,0 +1,10 @@
+services:
+  - type: web
+    name: text-to-prompt-compression
+    runtime: python
+    buildCommand: ""
+    startCommand: python app.py
+    envVars:
+      - key: TRANSFORMERS_CACHE
+        value: /mnt/data
+    plan: free

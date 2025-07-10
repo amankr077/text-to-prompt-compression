@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Text to Prompt Compression</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+  <div class="container">
+    <h1>Text to Prompt Compression</h1>
+    <textarea id="userInput" rows="6" cols="60" placeholder="Enter long text..."></textarea><br>
+    <button onclick="generateText()">Generate</button>
+    <h3>Compressed Prompt:</h3>
+    <p id="result" style="white-space: pre-wrap;"></p>
+  </div>
+
+  <script>
+    async function generateText() {
+      const userInput = document.getElementById("userInput").value;
+
+      try {
+        const response = await fetch('/generate', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ text: userInput })
+        });
+
+        const data = await response.json();
+        console.log("Response:", data);  // DEBUG LOG
+        document.getElementById("result").innerText = data.result || "No result returned.";
+      } catch (err) {
+        console.error("Error:", err);
+        document.getElementById("result").innerText = "Something went wrong!";
+      }
+    }
+  </script>
+</body>
+</html>
